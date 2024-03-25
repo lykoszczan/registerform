@@ -6,6 +6,7 @@ use App\Exception\User\UserAlreadyExistsException;
 use App\Exception\User\UserRegistrationBotDetectedException;
 use App\Model\User;
 use App\Repository\UserRepository;
+use InvalidArgumentException;
 
 class UserRegistrationService
 {
@@ -40,6 +41,12 @@ class UserRegistrationService
         string $second_name,
         string $password): User
     {
+        foreach (compact($email, $first_name, $second_name) as $name => $value) {
+            if (empty($value)) {
+                throw new InvalidArgumentException($name . ' cannot be empty');
+            }
+        }
+
         if ($this->user_repository->hasUserWithEmail($email)) {
             throw new UserAlreadyExistsException();
         }

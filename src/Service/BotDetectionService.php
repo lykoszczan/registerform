@@ -11,20 +11,20 @@ class BotDetectionService
     public function isBot(User $user_to_register, string $user_agent): bool
     {
         return
-            $this->isEmailCorrect($user_to_register->getEmail()) &&
-            $this->isEmailVerified($user_to_register->getEmail()) &&
-            $this->isUserAgentValid($user_agent);
+            !(
+                $this->isEmailCorrect($user_to_register->getEmail()) &&
+                $this->isEmailVerified($user_to_register->getEmail()) &&
+                $this->isUserAgentValid($user_agent)
+            );
     }
 
     private function isEmailCorrect(string $email): bool
     {
-        //todo
         return true;
     }
 
     private function isEmailVerified(string $email): bool
     {
-        //todo
         return true;
     }
 
